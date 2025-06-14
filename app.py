@@ -4,7 +4,9 @@ import streamlit as st
 import requests
 
 # API Config
-
+# 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
+API_URL = "https://api-inference.huggingface.co/models/HuggingFaceH4/zephyr-7b-beta"
+headers = {"Authorization": "Bearer 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"}  
 def query_model(prompt):
     response = requests.post(API_URL, headers=headers, json={"inputs": prompt})
     if response.status_code == 200:
