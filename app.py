@@ -1,12 +1,13 @@
-# app.py
-
 import streamlit as st
 import requests
+from dotenv import load_dotenv
+import os
 
-# API Config
-# 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
+load_dotenv()
+#Hugging Face token
+token = os.getenv("HF_TOKEN")
 API_URL = "https://api-inference.huggingface.co/models/HuggingFaceH4/zephyr-7b-beta"
-headers = {"Authorization": "Bearer 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"}  
+headers = {"Authorization": f"Bearer {token}"}
 def query_model(prompt):
     response = requests.post(API_URL, headers=headers, json={"inputs": prompt})
     if response.status_code == 200:
@@ -14,12 +15,12 @@ def query_model(prompt):
     else:
         return f"Error {response.status_code}: {response.text}"
 
-# Streamlit App UI
+#Streamlit App UI
 st.set_page_config(page_title="TalentScout Assistant")
 st.title("TalentScout Hiring Assistant (AI/ML Intern Project)")
 st.markdown("_This chatbot collects candidate info and generates tailored technical questions._")
 
-# Candidate Form
+#Candidate Form
 with st.form("candidate_form"):
     st.subheader("Candidate Information")
     name = st.text_input("Full Name")
@@ -32,7 +33,7 @@ with st.form("candidate_form"):
 
     submitted = st.form_submit_button("Submit")
 
-# On Submit
+#click On Submit
 if submitted:
     st.success(f"Thank you {name}! Generating questions...")
 
